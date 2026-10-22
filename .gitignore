@@ -1,0 +1,62 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# 论文工作产物（本地运行会生成，不应入库）
+_work/
+*.aux
+*.log
+*.out
+*.bbl
+*.blg
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+*.toc
+
+# 知识库与笔记（sci-brain 会写入项目目录）
+.knowledge/
+references.bib
+INDEX.md
+NOTES.md
+
+# 凭据与本地配置 —— 绝不入库
+*.key
+*.pem
+.env
+.env.*
+secrets/
+credentials.json
+config.local.*
+.dpapi
+*.dpapi
+
+# 运行时产物
+*.svg.tmp/
+figures/
+review.docx
+Manuscript.docx
+plan_state.json
+
+# 宿主配置与缓存
+.codex/
+.claude/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 本机备份目录
+*.bak-*
+.lunwenn-skill-local/
+
+# 编辑器
+.vscode/
+.idea/
+*.swp

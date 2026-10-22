@@ -1,0 +1,103 @@
+---
+name: autoresearch
+description: User trigger. Use when starting, resuming, or checking an autoresearch campaign — topics, evidence base, sealed validator, then validator-scored attempt loops.
+---
+
+## Installed resources
+
+Keep the working directory at the user's project. Resolve this loaded `SKILL.md`
+with `Path(path).resolve()` before locating resources; follow symlinks. Bare
+`helpers/`, `references/`, and template paths are relative to that real skill
+directory. A path written as `skills/<name>/...` means the installed `<name>`
+skill's directory from the agent's skill catalog, not a path in the user's project.
+Locate each dependency by its public skill name; copied skills need not be siblings.
+If a dependency is absent, report the missing skill and install it before that step.
+Shared writing files are bundled in `how-to-write-ideas-report/references/`.
+
+
+# Autoresearch
+
+One skill, four stages. State lives in `<project>/research/STATE.md`
+(schema and template: `references/state-schema.md`). Each stage's procedure
+is a file under `references/stages/`; this file decides which one applies
+and then follows it in the same context.
+
+| stage | what it produces | procedure |
+|---|---|---|
+| topics | `topics.md` — chosen topics, metrics, user-confirmed acceptance gate | `references/stages/topics.md` |
+| db | `.knowledge/`, `research/INSIGHTS.md`, `research/database/`, `research/CATALOG.md`; flips `survey_gate` | `references/stages/db.md` |
+| validator | `research/validator/` (GOAL.md, `validate` CLI, manifest), sealed holdout; flips `validator_gate` | `references/stages/validator.md` |
+| run | `.worktrees/attempt-NNN/`, `docs/discussion/` reflection reports | `references/stages/run.md` |
+
+Supporting references: `references/insights-template.md` (db),
+`references/validator-contract.md` + `references/negative-controls.md`
+(validator), `references/attempt-protocol.md` +
+`references/reflection-template.md` + `references/report-schema.md` (run),
+`helpers/report.py` (HTML cycle reports) and `helpers/gen_campaign.py`
+(cross-cycle full-campaign overview).
+Optional cycle completion notifications use `helpers/cycle_end_hook.py`;
+configuration and sound examples: `references/cycle-end-hook.md`.
+
+## Choose the request
+
+- **Status or explanation:** read `<project>/research/STATE.md` and the
+  artifacts its recorded stage implies. Report the stage, gates passed,
+  attempts completed and remaining, and any expected artifact that is missing.
+  Then stop: do not create or repair STATE.md, advance a stage, run
+  experiments, or spend the attempt budget. Missing or corrupt state is a
+  finding to report, not permission to initialize a campaign.
+- **Start, resume, or run a named stage:** follow Procedure below with the
+  user's existing choices and authorization. The stage gates still apply.
+- **Tidy up, pause, or close a campaign:** follow `references/tidy-up.md`.
+  It packs every attempt into its branch, removes the worktrees, and writes
+  `research/ATTEMPTS.md`; the stage is unchanged and the campaign can resume.
+
+## Procedure
+
+1. **Locate state.** Read `<project>/research/STATE.md`.
+   - **Missing** → new project: ask the user for a recommended number of
+     attempts per cycle (suggest 10). Explain that this is a planning default,
+     not a fixed batch size: the agent may choose a smaller or larger cycle
+     when the evidence, candidate pool, cost, or available parallelism calls
+     for it, without exceeding the authorized attempt budget. Create
+     `research/STATE.md` from `references/state-schema.md` (stage `topics`),
+     record the answer as `recommended_cycle_size`, then follow
+     `references/stages/topics.md`.
+   - **Readable legacy state with `batch_size`** → preserve its value by
+     migrating it to `recommended_cycle_size` on the next state write. Treat
+     it as guidance, not a hard protocol rule.
+   - **Corrupt/unreadable** → re-derive the stage from the artifact table
+     below (earliest stage whose required artifacts are missing), show the
+     user the derived state, and confirm with them before overwriting
+     STATE.md. Never overwrite a readable STATE.md.
+2. **Verify, don't trust.** Check the artifacts the recorded stage implies.
+   If any are missing, drop back to the earliest stage whose artifacts are
+   missing and tell the user what was expected and not found.
+3. **Report and route.** Summarize in a few sentences: stage, gates passed,
+   attempts completed, authorized attempts remaining. Then read the stage's
+   procedure file and follow it. When a stage advances `stage:` in
+   STATE.md, return to step 2 for the next stage unless the stage file says
+   to stop for user review.
+
+| `stage` | required artifacts before entering | procedure |
+|---|---|---|
+| topics | — | `references/stages/topics.md` |
+| db | `topics.md` with ≥1 chosen topic, each with a `### Metrics` block and a user-confirmed `### Acceptance gate` block | `references/stages/db.md` |
+| validator | survey gate passed: `research/CATALOG.md`, `.knowledge/INDEX.md`, `research/INSIGHTS.md` with a user-selected section | `references/stages/validator.md` |
+| run | validator gate passed: `research/validator/manifest.json` recording self-test results | `references/stages/run.md` |
+| done | final report exists in `docs/discussion/` | report status only |
+
+A user asking for one stage directly ("brainstorm autoresearch topics for
+X", "build the validator") still goes through steps 1–2: the stage file is
+followed only once its entry artifacts verify, or the user records an
+override.
+
+## Hard rules (all stages)
+
+- Gates flip to `passed` only by the stage that owns them (`db` →
+  `survey_gate`, `validator` → `validator_gate`), after the checklist in
+  that stage file verifies on disk.
+- Gates are never skipped on request without appending the deviation to
+  `overrides:` in STATE.md (see schema).
+- Holdout labels (`research/benchmark/private/`) never enter design
+  context, at any stage.

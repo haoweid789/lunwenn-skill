@@ -1,0 +1,51 @@
+MIT License
+
+Copyright (c) 2026 lunwenn-skill contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+## ⚠️ 重要：本仓库不是单一许可，而是「逐模块许可」
+
+顶层 MIT 许可仅适用于：
+
+- 本仓库**自己编写**的内容：`SKILL.md`、`README.md`、`SOURCES.md`、
+  `modules/codex-research-workflow/`、`modules/humanized-writing/`、
+  以及本仓库的构建/发布脚本。
+
+`modules/` 下的**上游归档模块保留各自原有许可**，不因顶层 MIT 而改变。
+使用任何模块前请阅读 `SOURCES.md` 的许可对照表。
+
+### 唯一的非商业限制
+
+`modules/academic-research-skills/` 采用 **CC BY-NC 4.0**（署名—非商业性使用）。
+因此：
+
+- **允许**：个人使用、教育用途、非商业研究、修改后再发布（须保留署名与 CC BY-NC 声明）。
+- **禁止**：任何商业用途，包括付费咨询、商业写作服务、将其并入付费产品。
+
+若你的用途是商业性的，请勿安装本仓库，或至少移除
+`modules/academic-research-skills/` 后再使用。
+
+### 第三方内容归属
+
+各上游项目的作者、仓库地址与许可见 [`SOURCES.md`](SOURCES.md)。
+上游内容以**只读副本**形式归档，请勿直接修改 `modules/` 下的上游文件；
+自有修改请提交到 `modules/codex-research-workflow/` 或本仓库自有文件中。
