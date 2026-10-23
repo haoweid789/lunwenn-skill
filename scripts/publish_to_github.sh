@@ -103,9 +103,39 @@ case "$MODE" in
     ;;
 
   ssh)
-    if [ ! -f "${HOME}/.ssh/id_ed25519.pub" ] && [ ! -f "${HOME}/.ssh/id_rsa.pub" ]; then
-      echo "✗ 未找到 SSH 公钥，先运行：ssh-keygen -t ed25519"
+    # 支持自定义密钥名：优先用 ssh config 里 github.com 指向的 IdentityFile，
+    # 其次找常见默认名，最后找任何 id_*_github*。
+    KEY=""
+    if grep -q "Host github.com" "${HOME}/.ssh/config" 2>/dev/null; then
+      RAW=$(awk '/^Host github.com/{f=1} f&&/IdentityFile/{print $2; exit}' "${HOME}/.ssh/config")
+      # ssh config 里常写 ~，bash 不自动展开，需手动替换
+      KEY="${RAW/#\~/$HOME}"
+    fi
+    [ -z "$KEY" ] && for k in id_ed25519 id_rsa id_ecdsa; do
+      [ -f "${HOME}/.ssh/${k}" ] && KEY="${HOME}/.ssh/${k}" && break
+    done
+    if [ -z "$KEY" ]; then
+      for k in "${HOME}"/.ssh/id_*github*; do
+        [ -f "$k" ] && case "$k" in *.pub) ;; *) KEY="$k" && break ;; esac
+      done
+    fi
+    if [ -z "$KEY" ] || [ ! -f "$KEY" ]; then
+      echo "✗ 未找到 SSH 私钥，先运行：ssh-keygen -t ed25519"
       echo "然后把公钥加到 https://github.com/settings/keys"
+      exit 1
+    fi
+    # 确认认证可用（失败时给明确指引）
+    # 注意：ssh -T 认证成功时 GitHub 返回的退出码是 1（因为不提供 shell），
+    # 所以只能靠输出文本判断，不能看 $?。
+    AUTH_OUT=$(ssh -o StrictHostKeyChecking=no -o ConnectTimeout=25 -T git@github.com 2>&1 || true)
+    if ! echo "$AUTH_OUT" | grep -q "successfully authenticated"; then
+      echo "✗ SSH 认证失败。输出：$AUTH_OUT"
+      echo "常见原因："
+      echo "   1. 公钥没加到 https://github.com/settings/keys"
+      echo "   2. 本机网络屏蔽了 22 端口 —— 在 ~/.ssh/config 里改用 443："
+      echo "        Host github.com"
+      echo "          HostName ssh.github.com"
+      echo "          Port 443"
       exit 1
     fi
     REMOTE="git@github.com:${OWNER}/${REPO}.git"
