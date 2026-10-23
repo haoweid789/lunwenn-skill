@@ -3,12 +3,14 @@ name: Lunwenn Skill
 description: >-
   论文全流程综合技能。把「一个研究课题 → 一篇可投稿论文」的整条链路装进一个技能：
   选题 → 检索 → 综述 → 统筹 → 统计 → 绘图 → 写作 → 润色 → 去 AI 味 → 引文核验 →
-  对抗审稿 → 返修回复 → 投稿 → 汇报/PPT。聚合十三个上游开源科研写作项目的成熟方法，
+  对抗审稿 → 返修回复 → 投稿 → 汇报/PPT；另含论文代码复现与对抗式选题闭环。
+  聚合十五个上游开源科研写作项目的成熟方法，
   覆盖 Codex、Claude Code、WorkBuddy 等技能宿主。触发词：写论文、论文全流程、文献综述、
   综述、精读论文、找 gap、论文写作、论文润色、去 AI 味、论文结构、贡献凝练、motivation、
   引文核验、参考文献造假、图表、科研绘图、可编辑矢量图、Nature 风格、模拟审稿、对抗审稿、
   rebuttal、回复审稿意见、投稿、paper writing、literature review、manuscript、academic pipeline、
-  research to paper、citation check、reviewer response、科研工作流、十环节、Codex 工作流、选题、头脑风暴。
+  research to paper、citation check、reviewer response、科研工作流、十环节、Codex 工作流、选题、头脑风暴、
+  代码复现、复现论文、reproduce、research cycle、scientific brainstorming。
 
 topics:
   - academic-writing

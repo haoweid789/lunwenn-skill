@@ -1,12 +1,12 @@
 ---
 name: lunwenn-skill
-description: "论文全流程综合技能（lunwenn-skill）。把「一个研究课题 → 一篇可投稿论文」的整条链路装进一个技能：选题 → 检索 → 综述 → 统筹 → 统计 → 绘图 → 写作 → 润色 → 去 AI 味 → 引文核验 → 对抗审稿 → 返修回复 → 投稿 → 汇报/PPT。聚合十二个上游开源项目（nature-skills、PaperSpine、academic-research-skills、paper-writing-skill、literature-survey-skill、citation-check-skill、paperpipe/papi、PaperQA2、Anthropic skill-creator、sci-brain、Cell 科研套件、用户自建 humanized-writing）。触发词：写论文、论文全流程、文献综述、综述、精读论文、找 gap、论文写作、论文润色、去 AI 味、论文结构、贡献凝练、motivation、引文核验、参考文献造假、图表、科研绘图、可编辑矢量图、Nature 风格、模拟审稿、对抗审稿、rebuttal、回复审稿意见、投稿、paper writing、literature review、manuscript、academic pipeline、research to paper、citation check、reviewer response、科研工作流、十环节、Codex 工作流、选题、头脑风暴。"
+description: "论文全流程综合技能（lunwenn-skill）。把「一个研究课题 → 一篇可投稿论文」的整条链路装进一个技能：选题 → 检索 → 综述 → 统筹 → 统计 → 绘图 → 写作 → 润色 → 去 AI 味 → 引文核验 → 对抗审稿 → 返修回复 → 投稿 → 汇报/PPT。聚合十五个上游项目（nature-skills、PaperSpine、academic-research-skills、paper-writing-skill、literature-survey-skill、citation-check-skill、paperpipe/papi、PaperQA2、Anthropic skill-creator、sci-brain、Cell 科研套件、ai-patina/human-voice、phd-skills、research-cycle-skill、用户自建 humanized-writing）。触发词：写论文、论文全流程、文献综述、综述、精读论文、找 gap、论文写作、论文润色、去 AI 味、论文结构、贡献凝练、motivation、引文核验、参考文献造假、图表、科研绘图、可编辑矢量图、Nature 风格、模拟审稿、对抗审稿、rebuttal、回复审稿意见、投稿、代码复现、复现论文、reproduce、research cycle、scientific brainstorming、对抗辩论、paper writing、literature review、manuscript、academic pipeline、research to paper、citation check、reviewer response、科研工作流、十环节、Codex 工作流、选题、头脑风暴。"
 agent_created: true
 ---
 
 # lunwenn-skill —— 论文全流程（论文 = lùnwén）
 
-本技能是**路由总控**，不自带全部原文：它把十二个上游项目的成熟方法编成一条流水线，
+本技能是**路由总控**，不自带全部原文：它把十五个上游项目的成熟方法编成一条流水线，
 按需加载 `modules/` 下对应模块的入口文件。**加载纪律：只读当前阶段需要的文件，
 大目录按需摘取，不要整目录塞进上下文。**
 
@@ -37,15 +37,18 @@ agent_created: true
 | PaperQA2 | `modules/paper-qa/` | `SKILL.md` | 本地 PDF 目录 RAG 问答（`pqa`） |
 | **cell-suite** | `modules/cell-suite/` | `cell/SKILL.md`（总路由）+ 12 个成员 | **Cell 科研套件**：证据驱动选题、研究计划排程、顶刊综述 Word、英文深度润色、审稿回复、投稿包、可视化代码、数据图复现、可编辑矢量图重建 |
 | **human-voice** | `modules/human-voice/` | `SKILL.md` | **改 AI 稿的结构级手术**：五维审计 + 14 个重写动作 + 句长/词汇/痕迹量化自查（`humanity_check.py`） |
-| **sci-brain** | `modules/sci-brain/` | 各子技能 `SKILL.md`（17 个） | **文献知识库 + 苏格拉底式选题 + 自动研究循环**：survey 建库、brainstorm-ideas 追问选题、autoresearch 验证循环、write-paper / review-paper、write-slides |
+| **sci-brain** | `modules/sci-brain/` | 各子技能 `SKILL.md`（16 个） | **文献知识库 + 苏格拉底式选题 + 自动研究循环**：survey 建库、brainstorm-ideas 追问选题、autoresearch 验证循环、write-paper / review-paper、write-slides |
+| **phd-skills** | `modules/phd-skills/` | `reproduce/SKILL.md` + `paper-verification/SKILL.md`（分工见 `_MODULE_GUIDE.md`） | **代码复现 7 阶段流水线 + 论文数值/公式核验**：从 arXiv 链接到可对比的复现结果，数字逐个追溯来源 |
+| **research-cycle** | `modules/research-cycle/` | `SKILL.md` | **多智能体对抗式选题闭环**：S2 定量 gap 分级 + Proposer/Reviewer/Evidence 辩论 + GO/REVISE/KILL，7 阶段一路走到复现与写作 |
 | skill-creator | `modules/skill-creator/` | `SKILL.md` | 维护/评测/改进本技能自身 |
 | humanized-writing | `modules/humanized-writing/` | `SKILL.md` | 你的去 AI 味写作 + `scripts/check_prose.py` 自查 |
 
 > `humanized-writing` 是**原目录的逐字节副本**；原目录
 > `C:\Users\qw123\.workbuddy\skills\humanized-writing\` 保持原样、不受本技能影响，二者内容一致。
 
-> `cell-suite` 与 `sci-brain` 是 v2 新增的只读副本，**其内部付费/外部服务依赖见
-> [`modules/codex-research-workflow/SKILL.md`](modules/codex-research-workflow/SKILL.md) 第四节**。
+> `cell-suite` 与 `sci-brain` 是 v2 新增的只读副本，`nature-skills`/`phd-skills`/`research-cycle`
+> 为后续版本新增；其内部付费/外部服务依赖见
+> [`modules/codex-research-workflow/SKILL.md`](modules/codex-research-workflow/SKILL.md) 第四节。
 
 ## 二、端到端流水线（12 站，可裁剪可跳站）
 
@@ -71,7 +74,7 @@ agent_created: true
 
 | 环 | 名称 | 默认入口 | 与十二站制的对应 |
 |---|---|---|---|
-| ① | 选题 | `cell-suite/cell-brainstorm` | 站 0（补强：证据驱动五选题） |
+| ① | 选题 | `cell-suite/cell-brainstorm` | 站 0（补强：证据驱动五选题；要对抗辩论 + 定量 gap 走 `research-cycle`） |
 | ② | 检索 | `nature-skills/nature-academic-search` | 站 1 |
 | ③ | 综述 | `cell-suite/cell-review` | 站 2（补强：≥30 篇硬门槛 + Word 交付） |
 | ④ | 统筹 | `codex-research-workflow` + `academic-research-skills/academic-pipeline` | 站 0 + 站 3 |
@@ -91,6 +94,9 @@ agent_created: true
 |---|---|
 | **按科研工作流走 / 从选题到投稿 / 十环节** | **`modules/codex-research-workflow/SKILL.md`**（统筹层） |
 | 我只有一个模糊方向 / 帮我把想法磨成题目 | `modules/cell-suite/cell-brainstorm/SKILL.md`（或 `modules/sci-brain/brainstorm-ideas/SKILL.md`） |
+| 对抗辩论找 gap / scientific brainstorming / research cycle / 这个方向到底有没有人做过 | `modules/research-cycle/SKILL.md`（S2 定量分级 + 三智能体对抗 + GO/REVISE/KILL） |
+| 复现一篇论文 / 代码复现 / reproduce / 这篇没给代码 | `modules/phd-skills/reproduce/SKILL.md`（7 阶段）+ `paper-verification/SKILL.md`（数值/公式核验），分工见 `modules/phd-skills/_MODULE_GUIDE.md` |
+| 论文里的数字和代码对不上 / 公式和实现不一致 | `modules/phd-skills/paper-verification/SKILL.md` |
 | 题目定了，帮我排研究计划 | `modules/cell-suite/cell-plan/SKILL.md` |
 | 建一个能引用的文献知识库 / 自动跑研究循环 | `modules/sci-brain/survey/SKILL.md`、`modules/sci-brain/autoresearch/SKILL.md` |
 | 帮我写论文 / 从课题到成稿 | 走完整 12 站，先看 `modules/academic-research-skills/academic-pipeline/SKILL.md` |
@@ -139,7 +145,10 @@ agent_created: true
   → cell-submission + nature-reviewer（⑨投稿）→ nature-paper2ppt（⑩汇报）`。
 - **给一批既有 PDF 做综述**：`papi` 建库 → `pqa ask`（共识/冲突/缺口）→ `literature-survey` 综合 → 出综述稿。
 - **要一篇能投的顶刊 Word 综述**：`sci-brain/survey` 或 `how-to-download-ref` 建库 → `cell-review` 出 `review.docx`。
-- **只有模糊想法，要磨成可做的题目**：`cell-brainstorm`（五题论证稿）或 `sci-brain/brainstorm-ideas`（苏格拉底追问）。
+- **只有模糊想法，要磨成可做的题目**：`cell-brainstorm`（五题论证稿）或 `sci-brain/brainstorm-ideas`（苏格拉底追问）；
+  要「先吵一架再决定」就走 `research-cycle`（对抗辩论 + S2 gap 定量 + GO/REVISE/KILL）。
+- **复现一篇论文并核对它的数字**：`phd-skills/reproduce`（7 阶段到 `results.md`）→
+  `phd-skills/paper-verification`（数字追源、公式-代码对齐）；论文自身引文真伪另走 `citation-check`。
 - **把参考图重建成可编辑 PPT/Illustrator 图形**：`cell_su7`（**先确认额度与授权**）→ 交付 SVG/PPTX/AI 源文件。
 - **只救急润色**：`humanized-writing`（中文）/ `en-humanizer.md`（英文）+ `check_prose.py` 自查。
 - **投稿返修**：`academic-paper-reviewer` 复现审稿意见 → `revision_coach` 逐条改 → `nature-response` 写回复信。
@@ -167,7 +176,7 @@ python3 modules/humanized-writing/scripts/check_prose.py 稿件路径
 
 ## 七、来源与许可
 
-十三个上游项目的仓库地址、许可与取舍说明见 [`SOURCES.md`](SOURCES.md)；整体结构与使用说明见 [`README.md`](README.md)。
+十五个上游项目的仓库地址、许可与取舍说明见 [`SOURCES.md`](SOURCES.md)；整体结构与使用说明见 [`README.md`](README.md)。
 上游均以**只读副本**形式归档于 `modules/`，不含图片/评测等大体积资源；需要上游完整仓库时按 `SOURCES.md` 的地址重新拉取。
 （例外：`modules/cell-suite/` 因清理了上游推广话术而不再逐字节一致，规则见其 `_LOCAL_POLICY.md`。）
 

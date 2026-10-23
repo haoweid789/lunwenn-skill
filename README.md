@@ -2,7 +2,7 @@
 
 **论文全流程综合技能** —— 把「一个研究课题 → 一篇可投稿论文」的整条链路装进一个技能。
 
-它把十二个上游开源科研写作项目 + 一个自建去 AI 味技能编成一条流水线，按需加载。
+它把十五个上游项目（十四个开源科研写作项目 + 一个自建去 AI 味技能）编成一条流水线，按需加载。
 `SKILL.md` 是路由总控；各上游内容以只读副本放在 `modules/` 下。
 
 ## 两套流水线
@@ -31,6 +31,8 @@ lunwenn-skill/
     ├── cell-suite/                ★ Cell 科研套件：选题/计划/顶刊综述/英文润色/审稿回复/投稿包/绘图代码/可编辑矢量图
     ├── sci-brain/                 ★ 文献知识库 + 苏格拉底选题 + autoresearch 验证循环 + 学术 slides
     ├── human-voice/               ★ 改 AI 稿的结构级手术 + 量化自查（humanity_check.py）
+    ├── phd-skills/                ★ 论文复现 7 阶段流水线 + 论文数值/公式核验
+    ├── research-cycle/            ★ 多智能体对抗式选题闭环（S2 定量 gap + GO/REVISE/KILL）
     ├── nature-skills/              23 个子技能：写作/润色/图/引文/审稿回复/读文/PPT/专利/统计
     ├── paperspine/                 motivation 驱动的论文骨架与修订矩阵
     ├── academic-research-skills/   10 阶段学术流水线（research→write→review→revise→finalize）
@@ -43,7 +45,7 @@ lunwenn-skill/
     └── humanized-writing/          去 AI 味写作 + check_prose.py（原目录副本）
 ```
 
-★ = v2/v3 新增
+★ = v2/v3/v4 新增
 
 ## 安装
 
@@ -115,11 +117,11 @@ python -m compileall -q scripts modules     # 语法检查
 | `academic-research-skills` | **CC BY-NC 4.0** | ❌ **仅非商业** |
 | nature-skills | Apache-2.0 | ✅ |
 | paper-qa | Apache-2.0 | ✅ |
-| paperspine / paperpipe / paper-writing-skill / literature-survey-skill / citation-check / skill-creator / sci-brain / cell-suite / human-voice / humanized-writing | MIT | ✅ |
+| paperspine / paperpipe / paper-writing-skill / literature-survey-skill / citation-check / skill-creator / sci-brain / cell-suite / human-voice / humanized-writing / phd-skills / research-cycle | MIT | ✅ |
 
 **商业用途请先移除 `modules/academic-research-skills/`。**
 各上游项目的作者、仓库地址与收录取舍见 [`SOURCES.md`](SOURCES.md)。
 
 ## 体积
 
-约 21 MB / 1760 文件；已剔除图片、参考 PDF、评测数据、多语言 README 等大体积资源。
+约 20 MB / 1795 文件；已剔除图片、参考 PDF、评测数据、多语言 README 等大体积资源。

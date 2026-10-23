@@ -1,6 +1,6 @@
 # SOURCES —— 来源、许可与收录说明
 
-`lunwenn-skill` 由以下十三个上游项目（十二个 GitHub 开源项目 + 用户自建技能）以**只读副本**形式聚合而成。
+`lunwenn-skill` 由以下十五个上游项目（十四个 GitHub 开源项目 + 用户自建技能）以**只读副本**形式聚合而成。
 副本归档在 `modules/` 下，已剔除图片/截图/评测数据等大体积资源，仅保留 SKILL.md、references、
 agents、scripts（文本）等内容。需要上游完整仓库时，按下表地址重新拉取。
 
@@ -27,6 +27,8 @@ agents、scripts（文本）等内容。需要上游完整仓库时，按下表�
 | 11 | **sci-brain** | `https://github.com/QuantumBFS/sci-brain` | MIT | `skills/` 下 16 个子技能（survey / brainstorm-ideas / autoresearch / write-paper / review-paper / write-slides / know-me-better / create-advisor / dump-chat-history / how-to-* 共 8 个）+ LICENSE；**未收录** `write-paper/sources/NotesOnWritingPaper12.pdf` |
 | 12 | **Cell 科研套件** | `https://github.com/yrui-cmd/Cell` | MIT | `skills/` 下 13 个成员（cell 总路由 + cell-brainstorm / cell-plan / cell-review / cell-manuscript-editing / cell-reviewer-response / cell-submission / cell-visualization-code / cell-data-figure / cell_su7 / cell_su8 / cell-cns-figure / cell-ppt-edited）+ LICENSE；**未收录** `cell_sci_magic`（八字择时娱乐，与科研流程无关）、`assets/*.jpg`、插件二进制。**推广话术已清理**，见 `_LOCAL_POLICY.md` |
 | 13 | **ai-patina（human-voice）** | `https://github.com/Rain13Sad/ai-patina` | MIT | `skills/human-voice/`（SKILL.md + 6 个 references + `scripts/humanity_check.py`）+ `docs/ai-text-detection-landscape.md` + LICENSE |
+| 14 | **phd-skills** | `https://github.com/fcakyon/phd-skills` | MIT | `plugin/skills/` 下 2 个技能：`reproduce`（7 阶段论文复现，含 7 个 references）+ `paper-verification`（论文数值/公式/引文核验）+ LICENSE；**未收录** 其余 9 个上游技能（debug/launch/compare 等，套件内已有替代或不需要），交叉引用的本地替代做法见 `modules/phd-skills/_MODULE_GUIDE.md` |
+| 15 | **research-cycle-skill** | `https://github.com/kris-yun/research-cycle-skill` | MIT | `.codex/skills/research-cycle/SKILL.md`（单文件技能：7 阶段闭环 + 多智能体对抗辩论 + S2 gap 定量）+ LICENSE；README/CHANGELOG 等开发文件未收录 |
 
 ### 13 | ai-patina 收录说明
 
@@ -37,6 +39,16 @@ agents、scripts（文本）等内容。需要上游完整仓库时，按下表�
   + 句长 CV / 短句占比 / hapax 比等量化指标与阈值。
 
 两者分工与路由规则见 [`modules/human-voice/_MODULE_GUIDE.md`](modules/human-voice/_MODULE_GUIDE.md)。
+
+## v4 变更（2026-10-23）
+
+本版新增两个模块，聚焦「论文代码复现」与「对抗式选题」两个环节；
+其余环节能力沿用既有模块，未做改动。
+
+| 环节 | v3 状态 | v4 补法 |
+|---|---|---|
+| ① 选题 | 有（cell-brainstorm / sci-brain brainstorm-ideas） | 新增 `research-cycle`（多智能体对抗辩论 + S2 定量 gap 分级 + GO/REVISE/KILL，7 阶段闭环到复现与写作） |
+| 代码复现 | **完全缺失** | 新增 `phd-skills/reproduce`（arXiv 链接 → 7 阶段 → `results.md` 三档标签）+ `paper-verification`（论文数字/公式 ↔ 代码核验） |
 
 ## v3 变更（2026-10-23）
 
@@ -49,7 +61,7 @@ agents、scripts（文本）等内容。需要上游完整仓库时，按下表�
 
 ## v2 变更（2026-10-22）
 
-在原十模块基础上补入图片所示的「Codex 科研工作流」十环节，并新增两个上游补齐缺口：
+在原十模块基础上补入「Codex 科研工作流」十环节统筹层，并新增两个上游补齐缺口：
 
 | 环节 | v1 状态 | v2 补法 |
 |---|---|---|
