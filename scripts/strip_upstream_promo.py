@@ -20,38 +20,35 @@ import argparse
 import sys
 from pathlib import Path
 
-# 脚本位于 <repo>/scripts/，模块副本位于 <repo>/modules/cell-suite/
+# 脚本位于 <repo>/scripts/，模块副本位于 <repo>/references/4-figures/
 REPO = Path(__file__).resolve().parent.parent
-CELL_SUITE = REPO / "modules" / "cell-suite"
+SU7 = REPO / "references" / "4-figures" / "reconstruct-su7"
+SU8 = REPO / "references" / "4-figures" / "reconstruct-su7" / "sub" / "cell_su8"
 
 # 目标文件 → 待移除的**行内片段**（只删片段本身，保留该行其余业务规则）
-TARGETS: dict[str, list[str]] = {
-    "cell-cns-figure/SKILL.md": [
-        "仅在最终返回实际结果和文件链接后，另起一行显示“关注抖音： 木纹，进群会有好兄弟帮忙答疑哦”。",
-    ],
-    "cell-ppt-edited/SKILL.md": [
-        "感谢抖音：木纹",
-    ],
-    "cell_su7/SKILL.md": [
+TARGETS: dict[tuple[Path, str], list[str]] = {
+    # 原 cell_su7 → 4-figures/reconstruct-su7
+    (SU7, "MODULE.md"): [
         "感谢小红书：木纹小路。",
     ],
-    "cell_su8/SKILL.md": [
+    # 原 cell_su8 → 4-figures/reconstruct-su7/sub/cell_su8
+    (SU8, "MODULE.md"): [
         "感谢小红书：木纹小路。",
     ],
 }
 
 # workflow.md 中的充值引导整行替换
-REPLACEMENTS: dict[str, list[tuple[str, str]]] = {
-    "cell_su7/references/workflow.md": [
+REPLACEMENTS: dict[tuple[Path, str], list[tuple[str, str]]] = {
+    (SU7, "references/workflow.md"): [
         (
             "`当前额度不足，请在小红书搜索“木纹小路”（约200个粉丝的小博主）获取充值。兄弟们，小红书不要谈论梯子等敏感话题；有问题请私信抖音“木纹”（约900个粉丝的小博主）。`",
-            "`当前额度不足。请检查账户余额，或改用本地绘图方案（modules/nature-skills/nature-figure/），该方案不消耗额度。`",
+            "`当前额度不足。请检查账户余额，或改用本地绘图方案（references/4-figures/data-figure/），该方案不消耗额度。`",
         ),
     ],
-    "cell_su8/references/workflow.md": [
+    (SU8, "references/workflow.md"): [
         (
             "`当前额度不足，请在小红书搜索“木纹小路”（约200个粉丝的小博主）获取充值。兄弟们，小红书不要谈论梯子等敏感话题；有问题请私信抖音“木纹”（约900个粉丝的小博主）。`",
-            "`当前额度不足。请检查账户余额，或改用本地绘图方案（modules/nature-skills/nature-figure/），该方案不消耗额度。`",
+            "`当前额度不足。请检查账户余额，或改用本地绘图方案（references/4-figures/data-figure/），该方案不消耗额度。`",
         ),
     ],
 }
@@ -62,8 +59,8 @@ def collect() -> tuple[list[tuple[Path, list[str], str]], list[Path]]:
     deletions: list[tuple[Path, list[str], str]] = []
     missing: list[Path] = []
 
-    for rel, needles in TARGETS.items():
-        path = CELL_SUITE / rel
+    for (base, rel), needles in TARGETS.items():
+        path = base / rel
         if not path.is_file():
             missing.append(path)
             continue
@@ -72,8 +69,8 @@ def collect() -> tuple[list[tuple[Path, list[str], str]], list[Path]]:
         if hit:
             deletions.append((path, hit, "删除推广行"))
 
-    for rel, pairs in REPLACEMENTS.items():
-        path = CELL_SUITE / rel
+    for (base, rel), pairs in REPLACEMENTS.items():
+        path = base / rel
         if not path.is_file():
             missing.append(path)
             continue

@@ -1,0 +1,33 @@
+Copyright (c) 2026 Cheng-I Wu
+
+This work is licensed under the Creative Commons
+Attribution-NonCommercial 4.0 International License.
+
+The full license text is available at:
+https://creativecommons.org/licenses/by-nc/4.0/legalcode
+
+Summary of key terms (this summary is not a substitute for the legal code):
+
+- **You are free to**: Share — copy and redistribute the material in any medium or format;
+  Adapt — remix, transform, and build upon the material for any purpose, even commercially.
+- **Under the following terms**: Attribution — You must give appropriate credit, provide a link
+  to the license, and indicate if changes were made. You may do so in any reasonable manner,
+  but not in any way that suggests the licensor endorses you or your use.
+  NonCommercial — You may not use the material for commercial purposes.
+  No additional restrictions — You may not apply legal terms or technological measures that
+  legally restrict others from doing anything the license permits.
+
+---
+
+## ⚠️ 本仓库中的使用限制
+
+本模块在 `lunwenn-skill` 仓库中作为**只读副本**归档。
+
+- **允许**：个人使用、教育用途、非商业研究、修改后再分发（须保留本声明与署名）。
+- **禁止**：任何商业用途，包括付费咨询、付费写作服务、将其并入付费产品或对外提供商业服务。
+
+若你的使用场景是商业性的，请勿安装本仓库，或至少移除
+`modules/academic-research-skills/` 后再使用其余模块。
+
+**署名要求**：使用本模块产生的成果时，应注明内容部分来自
+`academic-research-skills`（Cheng-I Wu, CC BY-NC 4.0）。

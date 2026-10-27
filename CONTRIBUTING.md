@@ -7,15 +7,17 @@
 
 | 你想改什么 | 改哪里 | 说明 |
 |---|---|---|
-| 路由逻辑、十环节编排、红线 | `SKILL.md`、`modules/codex-research-workflow/` | **本仓库自写**，欢迎直接 PR |
-| 模块分工说明 | `modules/human-voice/_MODULE_GUIDE.md`、`modules/cell-suite/_LOCAL_POLICY.md` | **本仓库自写** |
-| 上游模块内容 | `modules/<upstream>/` | **请勿直接改** —— 见下方「上游同步流程」 |
-| 上游版本升级 | 新增/替换 `modules/<upstream>/` 整个目录 | 走「上游同步流程」 |
+| 路由逻辑、十环节编排、红线 | `SKILL.md` | **本仓库自写**，欢迎直接 PR |
+| 族级路由与取舍 | `references/<族>/_index.md` | **本仓库自写** |
+| 模块分工说明 | `references/2-writing/humanize/_MODULE_GUIDE.md`、`references/4-figures/_LOCAL_POLICY.md` | **本仓库自写** |
+| 上游模块内容 | `references/<族>/<模块>/` 下的 `MODULE.md` 与资产 | **请勿直接改** —— 见下方「上游同步流程」 |
+| 上游版本升级 | 替换 `references/<族>/<模块>/` 整个目录 | 走「上游同步流程」 |
 | 发布脚本、清理脚本 | `scripts/` | **本仓库自写** |
 
 ## 上游同步流程
 
-`modules/` 下的上游目录是**只读副本**。升级某个上游时：
+`references/` 下的模块目录是**只读副本**，按能力分族存放（一个上游可能被拆到多个族，
+对应关系见 [`MIGRATION.md`](MIGRATION.md) 的「去向」列）。升级某个模块时：
 
 1. 从 `SOURCES.md` 的地址拉取上游仓库（**codeload 直连通常可用**）：
    ```bash
@@ -36,7 +38,7 @@
 - [ ] **不引入任何硬编码凭证**（API Key、token、密码、`.env`）。所有凭据走环境变量或用户输入。
 - [ ] **不引入个人路径**（`C:\Users\<你的用户名>\...`、`/home/<用户名>/...`）。用相对路径或占位符。
 - [ ] **不编造数据**：新增的示例、测试数据必须标注为合成数据（synthetic）。
-- [ ] **保持 CC BY-NC 边界**：不得把 `modules/academic-research-skills/` 的内容移入 MIT 区域。
+- [ ] **保持 CC BY-NC 边界**：不得把 `references/` 的内容移入 MIT 区域。
 - [ ] **新模块必须带 `LICENSE`** 或在 `SOURCES.md` 中查证并声明真实许可。
 - [ ] **入口 `SKILL.md` 的 frontmatter 必须有 `name` 和 `description`**，
       `description` 要含中英文触发词，否则宿主无法路由到它。
@@ -80,4 +82,4 @@ grep -rniE "C:\\\\Users\\\\|sk-[A-Za-z0-9]{20,}|api_key\s*=\s*['\"][A-Za-z0-9]{1
 ## 许可
 
 你贡献的内容按仓库顶层 [LICENSE](LICENSE) 的 MIT 条款发布；
-若你修改了 `modules/` 下的上游副本，请同时注明所基于的上游项目与版本。
+若你修改了 `references/` 下的上游副本，请同时注明所基于的上游项目与版本。

@@ -26,8 +26,9 @@ topics:
 license: mit
 
 # ⚠️ 注意：本仓库采用「逐模块许可」，顶层 MIT 仅覆盖仓库自写内容。
-# `modules/academic-research-skills/` 为 CC BY-NC 4.0（仅非商业），
-# 商业使用前请移除该模块。详见 README.md 与 LICENSE。
+# `academic-research-skills` 的部分为 CC BY-NC 4.0（仅非商业），已拆到
+# references/{0-orchestration/pipeline,1-literature/deep-research,1-literature/systematic-review,
+# 2-writing/paper-pipeline,3-review/panel}/。商业使用前请删除这 5 个目录。详见 README.md 与 LICENSE。
 
 language:
   - zh-CN

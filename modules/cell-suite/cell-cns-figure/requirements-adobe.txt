@@ -1,3 +1,0 @@
--r requirements.txt
-CairoSVG>=2.7,<3
-cairocffi>=1.6,<2
